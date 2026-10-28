@@ -58,3 +58,12 @@ describe('calcTotalScore: вагові коефіцієнти', () => {
     expect(calcTotalScore(input)).toBe(expected);
   });
 });
+
+describe('calcTotalScore: середнє за списками', () => {
+  it('усереднює лабораторні й контрольні', () => {
+    // лабораторні: (60 + 80 + 100) / 3 = 80 → 80 · 0,4 = 32
+    // контрольні: (70 + 90) / 2 = 80 → 80 · 0,3 = 24
+    const input = { labs: [60, 80, 100], tests: [70, 90], project: 0 };
+    expect(calcTotalScore(input)).toBe(56);
+  });
+});
