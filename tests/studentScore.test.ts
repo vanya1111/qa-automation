@@ -26,3 +26,13 @@ describe('calcTotalScore: порожні списки', () => {
     expect(() => calcTotalScore(input)).toThrow('EMPTY_SCORES');
   });
 });
+ 
+describe('calcTotalScore: однакові бали', () => {
+  it.each([0, 1, 50, 80, 99, 100])(
+    'усі складові по %i → підсумок %i',
+    (score) => {
+      const input = { labs: [score], tests: [score], project: score };
+      expect(calcTotalScore(input)).toBe(score);
+    },
+  );
+});
