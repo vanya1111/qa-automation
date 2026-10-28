@@ -6,6 +6,7 @@ export interface ParkingOptions {
 const FREE_MINUTES = 15;
 const FIRST_HOUR_FEE = 30;
 const EXTRA_HOUR_FEE = 20;
+const DAILY_CAP = 200;
  
 export function calcParkingFee(
   minutes: number,
@@ -18,5 +19,6 @@ export function calcParkingFee(
   if (minutes <= 60) return FIRST_HOUR_FEE;
  
   const extraHours = Math.ceil((minutes - 60) / 60);
-  return FIRST_HOUR_FEE + extraHours * EXTRA_HOUR_FEE;
+  const fee = FIRST_HOUR_FEE + extraHours * EXTRA_HOUR_FEE;
+  return Math.min(fee, DAILY_CAP);
 }
