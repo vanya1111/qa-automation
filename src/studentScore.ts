@@ -26,10 +26,10 @@ function assertValidScores(scores: StudentScores): void {
  
 export function calcTotalScore(scores: StudentScores): number {
   assertValidScores(scores);
-  return (
+  const total =
     (average(scores.labs) * LABS_WEIGHT +
       average(scores.tests) * TESTS_WEIGHT +
       scores.project * PROJECT_WEIGHT) /
-    100
-  );
+    100;
+  return Math.round(total * 100) / 100;
 }
