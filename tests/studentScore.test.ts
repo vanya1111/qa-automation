@@ -36,3 +36,25 @@ describe('calcTotalScore: однакові бали', () => {
     },
   );
 });
+ 
+describe('calcTotalScore: вагові коефіцієнти', () => {
+  it.each([
+    {
+      name: 'лише лабораторні (вага 40 %)',
+      input: { labs: [100], tests: [0], project: 0 },
+      expected: 40,
+    },
+    {
+      name: 'лише контрольні (вага 30 %)',
+      input: { labs: [0], tests: [100], project: 0 },
+      expected: 30,
+    },
+    {
+      name: 'лише проєкт (вага 30 %)',
+      input: { labs: [0], tests: [0], project: 100 },
+      expected: 30,
+    },
+  ])('$name → $expected', ({ input, expected }) => {
+    expect(calcTotalScore(input)).toBe(expected);
+  });
+});
