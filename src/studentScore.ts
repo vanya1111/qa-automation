@@ -4,15 +4,32 @@ export interface StudentScores {
   project: number;
 }
  
-export function calcTotalScore(scores: StudentScores): number {
+export const MIN_SCORE = 0;
+export const MAX_SCORE = 100;
+export const LABS_WEIGHT = 40;
+export const TESTS_WEIGHT = 30;
+export const PROJECT_WEIGHT = 30;
+ 
+function average(list: number[]): number {
+  return list.reduce((sum, value) => sum + value, 0) / list.length;
+}
+ 
+function assertValidScores(scores: StudentScores): void {
   if (scores.labs.length === 0 || scores.tests.length === 0) {
     throw new Error('EMPTY_SCORES');
   }
   const all = [...scores.labs, ...scores.tests, scores.project];
-  if (all.some((s) => !Number.isFinite(s) || s < 0 || s > 100)) {
+  if (all.some((s) => !Number.isFinite(s) || s < MIN_SCORE || s > MAX_SCORE)) {
     throw new Error('INVALID_SCORE');
   }
-  const labsAvg = scores.labs.reduce((sum, v) => sum + v, 0) / scores.labs.length;
-  const testsAvg = scores.tests.reduce((sum, v) => sum + v, 0) / scores.tests.length;
-  return (labsAvg * 40 + testsAvg * 30 + scores.project * 30) / 100;
+}
+ 
+export function calcTotalScore(scores: StudentScores): number {
+  assertValidScores(scores);
+  return (
+    (average(scores.labs) * LABS_WEIGHT +
+      average(scores.tests) * TESTS_WEIGHT +
+      scores.project * PROJECT_WEIGHT) /
+    100
+  );
 }
