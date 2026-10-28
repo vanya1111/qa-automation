@@ -46,3 +46,13 @@ export function toEctsGrade(total: number): EctsGrade {
   return 'F';
 
 }
+ 
+export interface StudentResult {
+  total: number;
+  grade: EctsGrade;
+}
+ 
+export function calcStudentResult(scores: StudentScores): StudentResult {
+  const total = calcTotalScore(scores);
+  return { total, grade: toEctsGrade(total) };
+}
