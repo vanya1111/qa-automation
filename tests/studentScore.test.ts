@@ -1,5 +1,10 @@
 import { describe, it, expect } from 'vitest';
-import { calcTotalScore, toEctsGrade } from '../src/studentScore';
+import {
+  calcStudentResult,
+  calcTotalScore,
+  toEctsGrade,
+} from '../src/studentScore';
+
  
 const valid = { labs: [80], tests: [80], project: 80 };
  
@@ -101,5 +106,29 @@ describe('toEctsGrade: оцінки D–F', () => {
     { total: 0, expected: 'F' },
   ])('$total → $expected', ({ total, expected }) => {
     expect(toEctsGrade(total)).toBe(expected);
+  });
+});
+ 
+describe('calcStudentResult', () => {
+  it('повертає підсумок і оцінку ЄКТС', () => {
+    // лабораторні (90 + 100) / 2 = 95 → 38; контрольні 80 → 24; проєкт 70 → 21
+    // разом 83 → B
+    const input = { labs: [90, 100], tests: [80], project: 70 };
+    expect(calcStudentResult(input)).toEqual({ total: 83, grade: 'B' });
+  });
+ 
+  it.each([
+    { score: 100, grade: 'A' },
+    { score: 60, grade: 'E' },
+    { score: 0, grade: 'F' },
+  ])('усі складові по $score → $grade', ({ score, grade }) => {
+    const input = { labs: [score], tests: [score], project: score };
+    expect(calcStudentResult(input)).toEqual({ total: score, grade });
+  });
+ 
+  it('передає помилку валідації', () => {
+    expect(() =>
+      calcStudentResult({ labs: [101], tests: [80], project: 80 }),
+    ).toThrow('INVALID_SCORE');
   });
 });
