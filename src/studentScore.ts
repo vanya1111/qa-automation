@@ -12,5 +12,5 @@ export function calcTotalScore(scores: StudentScores): number {
   if (all.some((s) => !Number.isFinite(s) || s < 0 || s > 100)) {
     throw new Error('INVALID_SCORE');
   }
-  return scores.project;
+  return (scores.labs[0] * 40 + scores.tests[0] * 30 + scores.project * 30) / 100;
 }
