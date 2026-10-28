@@ -12,5 +12,7 @@ export function calcTotalScore(scores: StudentScores): number {
   if (all.some((s) => !Number.isFinite(s) || s < 0 || s > 100)) {
     throw new Error('INVALID_SCORE');
   }
-  return (scores.labs[0] * 40 + scores.tests[0] * 30 + scores.project * 30) / 100;
+  const labsAvg = scores.labs.reduce((sum, v) => sum + v, 0) / scores.labs.length;
+  const testsAvg = scores.tests.reduce((sum, v) => sum + v, 0) / scores.tests.length;
+  return (labsAvg * 40 + testsAvg * 30 + scores.project * 30) / 100;
 }
