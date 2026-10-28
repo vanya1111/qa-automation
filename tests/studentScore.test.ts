@@ -67,3 +67,11 @@ describe('calcTotalScore: середнє за списками', () => {
     expect(calcTotalScore(input)).toBe(56);
   });
 });
+ 
+describe('calcTotalScore: округлення', () => {
+  it('округлює підсумок до двох знаків після коми', () => {
+    // 33,33·0,4 + 66,66·0,3 + 99,99·0,3 = 13,332 + 19,998 + 29,997 = 63,327
+    const input = { labs: [33.33], tests: [66.66], project: 99.99 };
+    expect(calcTotalScore(input)).toBe(63.33);
+  });
+});
