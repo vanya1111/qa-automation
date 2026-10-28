@@ -88,3 +88,18 @@ describe('toEctsGrade: оцінки A–C', () => {
     expect(toEctsGrade(total)).toBe(expected);
   });
 });
+ 
+describe('toEctsGrade: оцінки D–F', () => {
+  it.each([
+    { total: 73.99, expected: 'D' },
+    { total: 64, expected: 'D' },
+    { total: 63.99, expected: 'E' },
+    { total: 60, expected: 'E' },
+    { total: 59.99, expected: 'FX' },
+    { total: 35, expected: 'FX' },
+    { total: 34.99, expected: 'F' },
+    { total: 0, expected: 'F' },
+  ])('$total → $expected', ({ total, expected }) => {
+    expect(toEctsGrade(total)).toBe(expected);
+  });
+});
