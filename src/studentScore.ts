@@ -33,3 +33,11 @@ export function calcTotalScore(scores: StudentScores): number {
     100;
   return Math.round(total * 100) / 100;
 }
+ 
+export type EctsGrade = 'A' | 'B' | 'C';
+ 
+export function toEctsGrade(total: number): EctsGrade {
+  if (total >= 90) return 'A';
+  if (total >= 82) return 'B';
+  return 'C';
+}
