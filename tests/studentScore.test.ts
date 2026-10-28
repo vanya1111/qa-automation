@@ -17,3 +17,12 @@ describe('calcTotalScore: валідація балів', () => {
     expect(() => calcTotalScore(input)).toThrow('INVALID_SCORE');
   });
 });
+ 
+describe('calcTotalScore: порожні списки', () => {
+  it.each([
+    { name: 'немає лабораторних', input: { ...valid, labs: [] } },
+    { name: 'немає контрольних', input: { ...valid, tests: [] } },
+  ])('відхиляє: $name', ({ input }) => {
+    expect(() => calcTotalScore(input)).toThrow('EMPTY_SCORES');
+  });
+});
