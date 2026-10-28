@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { calcTotalScore } from '../src/studentScore';
+import { calcTotalScore, toEctsGrade } from '../src/studentScore';
  
 const valid = { labs: [80], tests: [80], project: 80 };
  
@@ -73,5 +73,18 @@ describe('calcTotalScore: округлення', () => {
     // 33,33·0,4 + 66,66·0,3 + 99,99·0,3 = 13,332 + 19,998 + 29,997 = 63,327
     const input = { labs: [33.33], tests: [66.66], project: 99.99 };
     expect(calcTotalScore(input)).toBe(63.33);
+  });
+});
+ 
+describe('toEctsGrade: оцінки A–C', () => {
+  it.each([
+    { total: 100, expected: 'A' },
+    { total: 90, expected: 'A' },
+    { total: 89.99, expected: 'B' },
+    { total: 82, expected: 'B' },
+    { total: 81.99, expected: 'C' },
+    { total: 74, expected: 'C' },
+  ])('$total → $expected', ({ total, expected }) => {
+    expect(toEctsGrade(total)).toBe(expected);
   });
 });
